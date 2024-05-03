@@ -6,7 +6,7 @@
 /*   By: alama <alama@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 18:52:02 by alama             #+#    #+#             */
-/*   Updated: 2024/05/02 22:23:00 by alama            ###   ########.fr       */
+/*   Updated: 2024/05/04 00:27:56 by alama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,13 @@ char	*get_next_line(int fd)
 	char	*str;
 	int		rd;
 	int		index;
-	
+
 	rd = 1;
-	str = malloc(sizeof(char *) * 10000);
+	str = malloc(sizeof(char *) * BUFFER_SIZE);
 	if (!str)
 		return (NULL);
 	index = 0;
-	while (rd != 0)
+	while (rd != 0 && index <= BUFFER_SIZE)
 	{
 		rd = read(fd, str + index, 1);
 		if (rd == -1)
