@@ -6,7 +6,7 @@
 /*   By: alama <alama@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 18:31:27 by alama             #+#    #+#             */
-/*   Updated: 2024/05/02 19:09:01 by alama            ###   ########.fr       */
+/*   Updated: 2024/05/06 19:23:07 by alama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,16 @@
 
 # include <stdlib.h>
 # include <unistd.h>
-# include <fcntl.h>
+
+# ifndef BUFFER_SIZE
+# define BUFFER_SIZE 10
+# endif
+
+typedef struct s_list
+{
+	void			*content;
+	struct s_list	*next;
+}	t_list;
 
 char	*get_next_line(int fd);
 
