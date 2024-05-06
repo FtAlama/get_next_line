@@ -6,7 +6,7 @@
 /*   By: alama <alama@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 18:52:02 by alama             #+#    #+#             */
-/*   Updated: 2024/05/06 21:27:28 by alama            ###   ########.fr       */
+/*   Updated: 2024/05/06 21:47:42 by alama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int	find_n(char *str)
 	while (str)
 	{
 		if (str[i] == '\n')
-			return (1);
+			return (i);
 		i++;
 	}
 	return (0);
@@ -35,8 +35,9 @@ static void	ft_creat_next_line(t_list **list, int fd)
 	int	rd;
 	
 	(*list)->content = malloc(BUFFER_SIZE);
-	while (find_n((*list)->content) < 0)
+	while (find_n((*list)->content) != 0)
 	{
+		rd = read(fd, (*list)->content, BUFFER_SIZE);
 		
 	}
 }
