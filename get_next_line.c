@@ -6,7 +6,7 @@
 /*   By: alama <alama@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 18:52:02 by alama             #+#    #+#             */
-/*   Updated: 2024/05/09 20:50:59 by alama            ###   ########.fr       */
+/*   Updated: 2024/05/09 21:17:57 by alama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,14 @@ static int	find_n(t_list **list)
 {
 	t_list	*tmp;
 	int		i;
-	int		p;
 
-	p = 0;
 	if (*list == NULL)
 		return (0);
 	tmp = *list;
 	while (tmp)
 	{
 		i = 0;
-		while (tmp->content[i])
+		while (tmp->content[i] && i < BUFFER_SIZE)
 		{
 			if (tmp->content[i] == '\n')
 				return (1);
@@ -44,6 +42,7 @@ static void	ft_add_back_list(t_list **list, char *str)
 
 	if (!str)
 		return ;
+	//printf("%s\n", str);
 	tmp_list = *list;
 	new = malloc(sizeof(t_list));
 	if (!new) // need free list
@@ -66,7 +65,7 @@ static void	ft_creat_next_line(t_list **list, int fd)
 	char	*str;
 
 	str = NULL;
-	while (find_n(list) == 0)
+	while (!find_n(list))
 	{
 		str = malloc(BUFFER_SIZE + 1);
 		if (!str)
