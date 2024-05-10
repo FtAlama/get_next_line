@@ -6,7 +6,7 @@
 /*   By: alama <alama@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 18:52:02 by alama             #+#    #+#             */
-/*   Updated: 2024/05/09 21:17:57 by alama            ###   ########.fr       */
+/*   Updated: 2024/05/10 15:24:23 by alama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,8 @@ static void	ft_creat_next_line(t_list **list, int fd)
 	char	*str;
 
 	str = NULL;
-	while (!find_n(list))
+	rd = 1;
+	while (!find_n(list) && rd != 0)
 	{
 		str = malloc(BUFFER_SIZE + 1);
 		if (!str)
