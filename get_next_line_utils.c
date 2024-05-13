@@ -6,7 +6,7 @@
 /*   By: alama <alama@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 23:40:51 by alama             #+#    #+#             */
-/*   Updated: 2024/05/12 22:08:43 by alama            ###   ########.fr       */
+/*   Updated: 2024/05/13 16:10:47 by alama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,14 @@ int	ft_strlen(char *str)
 	return (i);
 }
 
-char	*str_join(char *str, char *buffer)
+char	*str_join(char *str, char *buffer, int rd)
 {
 	char	*join;
 	int	i;
 	int	j;
 	
 	//printf("%d		-		%d\n", ft_strlen(str), ft_strlen(buffer));
-	join = malloc(sizeof(char) * (ft_strlen(str) + ft_strlen(buffer) + 1));
+	join = malloc(sizeof(char) * (ft_strlen(str) + rd + 1));
 	j = 0;
 	i = 0;
 	while (str[i])
@@ -40,7 +40,7 @@ char	*str_join(char *str, char *buffer)
 		j++;	
 	}
 	i = 0;
-	while (buffer[i])
+	while (i < rd)
 	{
 		join[j] = buffer[i];
 		i++;
@@ -48,8 +48,10 @@ char	*str_join(char *str, char *buffer)
 	}
 	join[j] = '\0';
 	free(str);
+	free(buffer);
 	return (join);
 }
+
 
 int	ft_find_line(char *str)
 {
@@ -62,7 +64,7 @@ int	ft_find_line(char *str)
 			return (i);
 		i++;
 	}
-	return (0);
+	return (-1);
 }
 
 char	*next_line(char *str)

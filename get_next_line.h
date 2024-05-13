@@ -6,7 +6,7 @@
 /*   By: alama <alama@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 18:31:27 by alama             #+#    #+#             */
-/*   Updated: 2024/05/12 22:05:51 by alama            ###   ########.fr       */
+/*   Updated: 2024/05/13 16:08:08 by alama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@
 # endif
 
 char	*get_next_line(int fd);
-char	*ft_add_str_buffer_size(char *str, int fd);
+char    *ft_add_str_buffer_size(char *str, int fd);
 int		ft_find_line(char *str);
-char	*str_join(char *str, char *buffer);
+char	*str_join(char *str, char *buffer, int rd);
 int		ft_strlen(char *str);
 char	*str_trim(char *str);
 char	*next_line(char *str);
