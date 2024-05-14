@@ -6,12 +6,21 @@
 /*   By: alama <alama@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 23:40:51 by alama             #+#    #+#             */
-/*   Updated: 2024/05/13 16:10:47 by alama            ###   ########.fr       */
+/*   Updated: 2024/05/14 16:33:53 by alama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 #include <stdio.h>
+
+void	ft_free(char **str)
+{
+	if (*str)
+	{
+		free(*str);
+		*str = NULL;
+	}
+}
 
 int	ft_strlen(char *str)
 {
@@ -23,41 +32,41 @@ int	ft_strlen(char *str)
 	return (i);
 }
 
-char	*str_join(char *str, char *buffer, int rd)
+char	*str_join(char **str, char **buffer, int rd)
 {
 	char	*join;
-	int	i;
-	int	j;
-	
-	//printf("%d		-		%d\n", ft_strlen(str), ft_strlen(buffer));
-	join = malloc(sizeof(char) * (ft_strlen(str) + rd + 1));
+	int		i;
+	int		j;
+
+	join = malloc(sizeof(char) * (ft_strlen(*str) + rd + 1));
 	j = 0;
 	i = 0;
-	while (str[i])
+	while ((*str)[i])
 	{
-		join[j] = str[i];
+		join[j] = (*str)[i];
 		i++;
-		j++;	
+		j++;
 	}
 	i = 0;
 	while (i < rd)
 	{
-		join[j] = buffer[i];
+		join[j] = (*buffer)[i];
 		i++;
 		j++;
 	}
 	join[j] = '\0';
-	free(str);
-	free(buffer);
+	ft_free(str);
+	ft_free(buffer);
 	return (join);
 }
-
 
 int	ft_find_line(char *str)
 {
 	int	i;
 
 	i = 0;
+	if (!str)
+		return (-1);
 	while (str[i])
 	{
 		if (str[i] == '\n')
@@ -72,7 +81,7 @@ char	*next_line(char *str)
 	char	*tmp;
 	int		i;
 	int		j;
-	
+
 	i = ft_find_line(str) + 1;
 	j = i;
 	while (str[i])
@@ -86,6 +95,6 @@ char	*next_line(char *str)
 		i++;
 	}
 	tmp[i] = '\0';
-	free(str);
+	ft_free(&str);
 	return (tmp);
 }
