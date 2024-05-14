@@ -6,7 +6,7 @@
 /*   By: alama <alama@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 18:52:02 by alama             #+#    #+#             */
-/*   Updated: 2024/05/14 16:51:01 by alama            ###   ########.fr       */
+/*   Updated: 2024/05/14 17:42:04 by alama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,10 @@ char	*ft_add_str_buffer_size(char *str, int fd)
 		}
 		if (rd == 0)
 			break ;
-		str = str_join(&str, &buffer, rd);
+		str = str_join(str, buffer, rd);
 	}
+	if (rd == 0)
+		ft_free(&buffer);
 	return (str);
 }
 
@@ -56,10 +58,7 @@ char	*str_trim(char *str)
 		i++;
 	}
 	if (str[tmp] == '\n')
-	{
-		buffer[i] = '\n';
-		i++;
-	}
+		buffer[i++] = '\n';
 	buffer[i] = '\0';
 	return (buffer);
 }
