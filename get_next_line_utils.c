@@ -6,7 +6,7 @@
 /*   By: alama <alama@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 23:40:51 by alama             #+#    #+#             */
-/*   Updated: 2024/05/16 16:37:47 by alama            ###   ########.fr       */
+/*   Updated: 2024/05/16 19:06:57 by alama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,11 @@ char	*str_join(char *str, char *buffer, int rd)
 
 	join = malloc(sizeof(char) * (ft_strlen(str) + rd + 1));
 	if (!join)
+	{
+		ft_free(&str);
+		ft_free(&buffer);
 		return (NULL);
+	}
 	j = 0;
 	i = 0;
 	while (str[i])
@@ -80,13 +84,21 @@ char	*next_line(char *str)
 	int		i;
 	int		j;
 
+	if (!str)
+	{
+		ft_free(&str);
+		return (NULL);
+	}
 	i = ft_find_line(str) + 1;
 	j = i;
 	while (str[i])
 		i++;
 	tmp = malloc(sizeof(char) * (i - j + 1));
 	if (!tmp)
+	{
+		ft_free(&str);
 		return (NULL);
+	}
 	i = 0;
 	while (str[j])
 	{

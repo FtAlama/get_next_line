@@ -6,7 +6,7 @@
 /*   By: alama <alama@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 18:52:02 by alama             #+#    #+#             */
-/*   Updated: 2024/05/16 16:49:01 by alama            ###   ########.fr       */
+/*   Updated: 2024/05/16 19:04:47 by alama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,16 @@
 char	*ft_add_str_buffer_size(char *str, int fd)
 {
 	char	*buffer;
-	char	*tmp;
 	int		rd;
 
-	while (ft_find_line(str) == -1)
+	while (str && ft_find_line(str) == -1)
 	{
 		buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
 		if (!buffer)
+		{
+			ft_free(&str);
 			return (NULL);
+		}
 		rd = read(fd, buffer, BUFFER_SIZE);
 		if (rd < 0)
 		{
@@ -34,9 +36,7 @@ char	*ft_add_str_buffer_size(char *str, int fd)
 		if (rd == 0)
 			break ;
 		buffer[rd] = '\0';
-		tmp = str_join(str, buffer, rd);
-		str = tmp;
-		tmp = NULL;
+		str = str_join(str, buffer, rd);
 	}
 	if (rd == 0)
 		ft_free(&buffer);
@@ -58,6 +58,8 @@ char	*str_trim(char *str)
 		buffer = malloc(sizeof(char) * (tmp + 2));
 	else
 		buffer = malloc(sizeof(char) * (tmp + 1));
+	if (!buffer)
+		return (NULL);
 	i = 0;
 	while (i < tmp)
 	{
@@ -74,7 +76,6 @@ char	*get_next_line(int fd)
 {
 	static char	*str;
 	char		*buffer;
-	char		*tmp;
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
 	{
@@ -89,10 +90,15 @@ char	*get_next_line(int fd)
 		str[0] = '\0';
 	}
 	str = ft_add_str_buffer_size(str, fd);
+	if (!str)
+		return (NULL);
 	buffer = str_trim(str);
-	tmp = next_line(str);
-	str = tmp;
-	tmp = NULL;
+	if (!buffer)
+	{
+		ft_free(&str);
+		return (NULL);
+	}
+	str = next_line(str);
 	if (ft_find_line(buffer) == -1)
 		ft_free(&str);
 	return (buffer);
