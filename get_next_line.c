@@ -6,7 +6,7 @@
 /*   By: alama <alama@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 18:52:02 by alama             #+#    #+#             */
-/*   Updated: 2024/05/14 20:25:38 by alama            ###   ########.fr       */
+/*   Updated: 2024/05/16 16:49:01 by alama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,14 @@ char	*ft_add_str_buffer_size(char *str, int fd)
 	while (ft_find_line(str) == -1)
 	{
 		buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
+		if (!buffer)
+			return (NULL);
 		rd = read(fd, buffer, BUFFER_SIZE);
 		if (rd < 0)
 		{
 			ft_free(&str);
 			ft_free(&buffer);
+			return (NULL);
 		}
 		if (rd == 0)
 			break ;
@@ -47,7 +50,7 @@ char	*str_trim(char *str)
 	int		tmp;
 
 	tmp = 0;
-	if (str[0] == '\0')
+	if (!str || str[0] == '\0')
 		return (NULL);
 	while (str[tmp] != '\n' && str[tmp] != '\0')
 		tmp++;
@@ -71,22 +74,25 @@ char	*get_next_line(int fd)
 {
 	static char	*str;
 	char		*buffer;
+	char		*tmp;
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
 	{
 		ft_free(&str);
 		return (NULL);
 	}
-
 	if (str == NULL)
 	{
 		str = malloc(sizeof(char) * 1);
-		if (!str) return (NULL);
+		if (!str)
+			return (NULL);
 		str[0] = '\0';
 	}
 	str = ft_add_str_buffer_size(str, fd);
 	buffer = str_trim(str);
-	str = next_line(str);
+	tmp = next_line(str);
+	str = tmp;
+	tmp = NULL;
 	if (ft_find_line(buffer) == -1)
 		ft_free(&str);
 	return (buffer);

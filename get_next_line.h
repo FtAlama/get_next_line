@@ -6,7 +6,7 @@
 /*   By: alama <alama@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 18:31:27 by alama             #+#    #+#             */
-/*   Updated: 2024/05/14 20:21:25 by alama            ###   ########.fr       */
+/*   Updated: 2024/05/16 15:43:01 by alama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <unistd.h>
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 26546540
+#  define BUFFER_SIZE 10
 # endif
 
 char	*get_next_line(int fd);
