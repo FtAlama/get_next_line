@@ -6,19 +6,25 @@
 /*   By: alama <alama@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 18:52:02 by alama             #+#    #+#             */
-/*   Updated: 2024/05/16 19:04:47 by alama            ###   ########.fr       */
+/*   Updated: 2024/05/16 21:54:42 by alama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 #include <stdio.h>
 
+void	ft_free_twice(char *one, char *sec)
+{
+	ft_free(&one);
+	ft_free(&sec);
+}
+
 char	*ft_add_str_buffer_size(char *str, int fd)
 {
 	char	*buffer;
 	int		rd;
 
-	while (str && ft_find_line(str) == -1)
+	while (str != NULL && ft_find_line(str) == -1)
 	{
 		buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
 		if (!buffer)
@@ -29,8 +35,7 @@ char	*ft_add_str_buffer_size(char *str, int fd)
 		rd = read(fd, buffer, BUFFER_SIZE);
 		if (rd < 0)
 		{
-			ft_free(&str);
-			ft_free(&buffer);
+			ft_free_twice(str, buffer);
 			return (NULL);
 		}
 		if (rd == 0)
@@ -93,11 +98,6 @@ char	*get_next_line(int fd)
 	if (!str)
 		return (NULL);
 	buffer = str_trim(str);
-	if (!buffer)
-	{
-		ft_free(&str);
-		return (NULL);
-	}
 	str = next_line(str);
 	if (ft_find_line(buffer) == -1)
 		ft_free(&str);

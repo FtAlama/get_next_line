@@ -6,7 +6,7 @@
 /*   By: alama <alama@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 23:40:51 by alama             #+#    #+#             */
-/*   Updated: 2024/05/16 19:06:57 by alama            ###   ########.fr       */
+/*   Updated: 2024/05/16 22:04:04 by alama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ int	ft_strlen(char *str)
 {
 	int	i;
 
+	if (!str)
+		return (0);
 	i = 0;
 	while (str[i])
 		i++;
@@ -36,18 +38,13 @@ char	*str_join(char *str, char *buffer, int rd)
 	int		j;
 
 	join = malloc(sizeof(char) * (ft_strlen(str) + rd + 1));
-	if (!join)
-	{
-		ft_free(&str);
-		ft_free(&buffer);
-		return (NULL);
-	}
+	if (!join || !str || !buffer)
+		return (ft_free_twice(str, buffer), NULL);
 	j = 0;
-	i = 0;
-	while (str[i])
+	i = -1;
+	while (str[++i])
 	{
 		join[j] = str[i];
-		i++;
 		j++;
 	}
 	i = -1;
@@ -57,9 +54,7 @@ char	*str_join(char *str, char *buffer, int rd)
 		j++;
 	}
 	join[j] = '\0';
-	ft_free(&str);
-	ft_free(&buffer);
-	return (join);
+	return (ft_free_twice(str, buffer), join);
 }
 
 int	ft_find_line(char *str)
@@ -84,11 +79,6 @@ char	*next_line(char *str)
 	int		i;
 	int		j;
 
-	if (!str)
-	{
-		ft_free(&str);
-		return (NULL);
-	}
 	i = ft_find_line(str) + 1;
 	j = i;
 	while (str[i])

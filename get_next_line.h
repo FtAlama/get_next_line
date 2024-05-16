@@ -6,7 +6,7 @@
 /*   By: alama <alama@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 18:31:27 by alama             #+#    #+#             */
-/*   Updated: 2024/05/16 15:43:01 by alama            ###   ########.fr       */
+/*   Updated: 2024/05/16 19:30:47 by alama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,6 @@ int		ft_strlen(char *str);
 char	*str_trim(char *str);
 char	*next_line(char *str);
 void	ft_free(char **str);
+void	ft_free_twice(char *one, char *sec);
 
 #endif
