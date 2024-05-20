@@ -6,7 +6,7 @@
 /*   By: alama <alama@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 18:52:02 by alama             #+#    #+#             */
-/*   Updated: 2024/05/17 15:31:16 by alama            ###   ########.fr       */
+/*   Updated: 2024/05/20 15:59:55 by alama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,7 @@ char	*ft_add_str_buffer_size(char *str, int fd)
 		}
 		rd = read(fd, buffer, BUFFER_SIZE);
 		if (rd < 0)
-		{
-			ft_free_twice(str, buffer);
-			return (NULL);
-		}
+			return (ft_free_twice(str, buffer), NULL);
 		if (rd == 0)
 			break ;
 		buffer[rd] = '\0';
@@ -82,7 +79,8 @@ char	*get_next_line(int fd)
 	static char	*str;
 	char		*buffer;
 
-	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
+	if (fd < 0 || BUFFER_SIZE <= 0 || BUFFER_SIZE >= 2147483647
+		|| read(fd, 0, 0) < 0)
 	{
 		ft_free(&str);
 		return (NULL);
