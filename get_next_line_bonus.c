@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alama <alama@student.s19.be>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 18:52:02 by alama             #+#    #+#             */
-/*   Updated: 2024/05/21 15:10:32 by alama            ###   ########.fr       */
+/*   Updated: 2024/05/22 15:06:08 by alama            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 #include <stdio.h>
 
 void	ft_free_twice(char *one, char *sec)
@@ -28,10 +28,7 @@ char	*ft_add_str_buffer_size(char *str, int fd)
 	{
 		buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
 		if (!buffer)
-		{
-			ft_free(&str);
-			return (NULL);
-		}
+			return (ft_free(&str), NULL);
 		rd = read(fd, buffer, BUFFER_SIZE);
 		if (rd < 0)
 			return (ft_free_twice(str, buffer), NULL);
@@ -76,28 +73,25 @@ char	*str_trim(char *str)
 
 char	*get_next_line(int fd)
 {
-	static char	*str;
+	static char	*str[LIMIT_FD];
 	char		*buffer;
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || BUFFER_SIZE >= 2147483647
-		|| read(fd, 0, 0) < 0)
+		|| read(fd, 0, 0) < 0 || LIMIT_FD > OPEN_MAX)
+		return (ft_free(&(str[fd])), NULL);
+	if (str[fd] == NULL)
 	{
-		ft_free(&str);
-		return (NULL);
-	}
-	if (str == NULL)
-	{
-		str = malloc(sizeof(char) * 1);
-		if (!str)
+		str[fd] = malloc(sizeof(char) * 1);
+		if (!str[fd])
 			return (NULL);
-		str[0] = '\0';
+		str[fd][0] = '\0';
 	}
-	str = ft_add_str_buffer_size(str, fd);
-	if (!str)
+	str[fd] = ft_add_str_buffer_size(str[fd], fd);
+	if (!str[fd])
 		return (NULL);
-	buffer = str_trim(str);
-	str = next_line(str);
+	buffer = str_trim(str[fd]);
+	str[fd] = next_line(str[fd]);
 	if (ft_find_line(buffer) == -1)
-		ft_free(&str);
+		ft_free(&str[fd]);
 	return (buffer);
 }
